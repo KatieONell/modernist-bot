@@ -1,5 +1,6 @@
 import re
-text_file = open('moore.txt', 'r', errors='ignore')
+import codecs
+text_file = open('moore.txt', 'r', encoding='utf-8', errors='ignore')
 corpus = text_file.read().split('\n')
 toc = corpus[0:corpus.index("POEMS:")]
 titles = list(filter(lambda a: a != '', toc))[2:]
@@ -21,9 +22,9 @@ for j in range(len(split_points)-1):
   stop = split_points[j+1]
   poem = clean_poem(corpus[start+1:stop])
 
-  outfile = open('poems/'+re.sub(r'\W+', '', titles[j].lower())+'.txt', 'w')
-  outfile.write(poem)
-  outfile.close()
-  print('poems/'+re.sub(r'\W+', '', titles[j].lower())+'.txt')
+  with codecs.open('poems/'+re.sub(r'\W+', '', titles[j].lower())+'.txt', 'w', "utf-8-sig") as outfile:
+  	outfile.write(poem)
+  	outfile.close()
+  	print('poems/'+re.sub(r'\W+', '', titles[j].lower())+'.txt')
 
 
